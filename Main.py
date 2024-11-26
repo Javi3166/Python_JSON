@@ -52,3 +52,19 @@ print(userJSON)
 print("\nIt is also possible to use a different format for calling the encoder.")
 userJSON = UserEncoder().encode(user)
 print(userJSON)
+
+print("\nIt is possible to decode the JSON file back to a dictionary or user class.")
+
+print("\nUsing json.loads() just converts the json file to a dictionary.")
+user = json.loads(userJSON)
+print(user)
+
+print("\nIn order to decode it json file to a user class, a custom decoder will be needed.")
+def decode_user(dct):
+    if User.__name__ in dct:
+        return User(name=dct['name'], age=dct['age'])
+    return dct
+
+user = json.loads(userJSON, object_hook=decode_user)
+print(type(user))
+print(user.name)
